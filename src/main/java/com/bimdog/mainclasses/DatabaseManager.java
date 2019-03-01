@@ -12,5 +12,14 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
         return !connection.isClosed();
     }
+
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
