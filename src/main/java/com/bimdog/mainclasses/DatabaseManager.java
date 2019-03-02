@@ -3,6 +3,7 @@ package com.bimdog.mainclasses;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseManager {
 
@@ -14,12 +15,13 @@ public class DatabaseManager {
     }
 
 
-    public void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void insert(Statement statement, String comand) throws SQLException{
+        statement.execute(comand);
     }
+
+    public void closeConnection() throws SQLException {
+       connection.close();
+    }
+
 }
 

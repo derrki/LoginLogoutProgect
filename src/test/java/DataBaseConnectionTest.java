@@ -26,7 +26,7 @@ public class DataBaseConnectionTest {
 
 
     @After
-    public void closeConnection(){
+    public void closeConnection() throws SQLException {
         try {
             databaseManager.closeConnection();
             System.out.println("конект закрито");
