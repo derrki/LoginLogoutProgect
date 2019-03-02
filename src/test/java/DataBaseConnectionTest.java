@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class DataBaseConnectionTest {
 
 
-    private DatabaseManager databaseManager = new DatabaseManager();
+    private DatabaseManager databaseManager;
 
     String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
             "?verifyServerCertificate=false"+
@@ -18,10 +18,29 @@ public class DataBaseConnectionTest {
     String USERNAME_MYSQL = "root";
     String PASSWORD_MYSQL = "root";
 
+    @Before
+    public void setup() {
+        databaseManager = new DatabaseManager();
+        System.out.println("before");
+    }
+
+
+    @After
+    public void closeConnection(){
+        try {
+            databaseManager.closeConnection();
+            System.out.println("конект закрито");
+
+        } catch (NullPointerException e) {
+            System.out.println("конект не був відкритий - " + e);
+        }
+    }
+
     @Test
     public void test_connection_to_db_with_all_correct_input_parameters() {
         try {
             Assert.assertTrue(databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL));
+            System.out.println("OK. Base test");
         } catch (SQLException e) {
             e.printStackTrace();
         }
