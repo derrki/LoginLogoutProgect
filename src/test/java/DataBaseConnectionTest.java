@@ -26,4 +26,44 @@ public class DataBaseConnectionTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void test_connection_to_db_with_Host_null() {
+        try {
+            databaseManager.connect(null, USERNAME_MYSQL, PASSWORD_MYSQL);
+            Assert.fail();
+        } catch (SQLException e) {
+            System.out.println("OK");
+        }
+    }
+
+    @Test
+    public void test_connection_to_db_with_username_null() {
+        try {
+            databaseManager.connect(HOST_MYSQL, null, PASSWORD_MYSQL);
+            Assert.fail();
+        } catch (SQLException e) {
+            System.out.println("OK");
+        }
+    }
+
+    @Test
+    public void test_connection_to_db_with_password_null() {
+        try {
+            databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, null);
+            Assert.fail();
+        } catch (SQLException e) {
+            System.out.println("OK");
+        }
+    }
+
+    @Test
+    public void test_connection_to_db_with_all_input_parameters_null() {
+        try {
+            databaseManager.connect(null, null, null);
+            Assert.fail();
+        } catch (SQLException e) {
+            System.out.println("OK");
+        }
+    }
 }
