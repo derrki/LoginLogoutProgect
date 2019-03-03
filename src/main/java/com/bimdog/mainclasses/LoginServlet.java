@@ -28,6 +28,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("name", name);
             session.setAttribute("surname", surname);
         }
+        else{
+            out.print("Sorry, username or password error!");
+            request.getRequestDispatcher("login.html").include(request, response);
+        }
+        out.close();
 
     }
 }
