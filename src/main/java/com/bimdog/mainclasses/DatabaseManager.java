@@ -28,8 +28,12 @@ public class DatabaseManager {
         return statement.executeQuery(comandQuery);
     }
 
-    public void closeConnection() throws SQLException {
-       connection.close();
+    public void disconnectDb() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

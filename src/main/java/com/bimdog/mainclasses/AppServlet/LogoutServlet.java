@@ -1,4 +1,4 @@
-package com.bimdog.mainclasses;
+package com.bimdog.mainclasses.AppServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

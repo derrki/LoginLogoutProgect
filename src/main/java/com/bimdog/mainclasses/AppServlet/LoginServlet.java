@@ -1,4 +1,6 @@
-package com.bimdog.mainclasses;
+package com.bimdog.mainclasses.AppServlet;
+
+import com.bimdog.mainclasses.DatabaseManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

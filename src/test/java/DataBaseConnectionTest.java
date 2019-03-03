@@ -28,9 +28,9 @@ public class DataBaseConnectionTest {
 
 
     @After
-    public void closeConnection() throws SQLException {
+    public void closeConnection(){
         try {
-            databaseManager.closeConnection();
+            databaseManager.disconnectDb();
             System.out.println("конект закрито");
         } catch (NullPointerException e) {
             System.out.println("конект не був відкритий - " + e);
