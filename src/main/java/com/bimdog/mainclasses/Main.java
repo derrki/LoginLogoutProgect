@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class Main {
-
 //  public static final String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
 //            "?verifyServerCertificate=false"+
 //            "&useSSL=false"+
