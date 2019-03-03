@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -44,7 +43,7 @@ public class LoginServlet extends HttpServlet {
       PreparedStatement preparedStatement;
 
       try {
-          databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+          databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
             preparedStatement = databaseManager.getConnection().prepareStatement(comand);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, surname);
@@ -53,8 +52,6 @@ public class LoginServlet extends HttpServlet {
             preparedStatement.execute();
 
       } catch (SQLException e) {
-          e.printStackTrace();
-      } catch (ClassNotFoundException e) {
           e.printStackTrace();
       }
 

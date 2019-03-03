@@ -4,11 +4,16 @@ import java.sql.*;
 
 public class DatabaseManager {
 
-    private Connection connection;
+    private Connection connection = null;
 
-    public void connect(String host_mysql, String username_mysql, String password_mysql) throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
+    public Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException{
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 
     public Connection getConnection() {

@@ -1,11 +1,11 @@
 import com.bimdog.mainclasses.DatabaseManager;
+
 import org.junit.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DataBaseConnectionTest {
-
 
     private DatabaseManager databaseManager;
     private Connection connection;
@@ -40,62 +40,51 @@ public class DataBaseConnectionTest {
     @Test
     public void test_connection_to_db_with_all_correct_input_parameters() {
         try {
-          databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
-          connection = databaseManager.getConnection();
+           connection = databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
             Assert.assertTrue(!connection.isClosed());
-            System.out.println("OK. Base test");
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
+        System.out.println("OK. Base test");
     }
 
     @Test
     public void test_connection_to_db_with_Host_null() {
         try {
-            databaseManager.connect(null, USERNAME_MYSQL, PASSWORD_MYSQL);
+            databaseManager.connectDB(null, USERNAME_MYSQL, PASSWORD_MYSQL);
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
     @Test
     public void test_connection_to_db_with_username_null() {
         try {
-            databaseManager.connect(HOST_MYSQL, null, PASSWORD_MYSQL);
+            databaseManager.connectDB(HOST_MYSQL, null, PASSWORD_MYSQL);
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
     @Test
     public void test_connection_to_db_with_password_null() {
         try {
-            databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, null);
+            databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, null);
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
     @Test
     public void test_connection_to_db_with_all_input_parameters_null() {
         try {
-            databaseManager.connect(null, null, null);
+            databaseManager.connectDB(null, null, null);
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

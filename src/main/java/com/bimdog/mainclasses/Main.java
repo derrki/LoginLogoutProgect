@@ -18,10 +18,10 @@ public class Main {
 //
 //
 //
-//        //connect
+//        //connectDB
 //        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa9', 'vas9', 'log9', 'qwerty9');";
 //        DatabaseManager databaseManager = new DatabaseManager();
-//        databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+//        databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
 //
 //        //insert
 //        Statement statement = databaseManager.getConnection().createStatement();
