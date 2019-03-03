@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -38,24 +39,17 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-      // String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa8', 'vas8', 'log8', 'qwerty8');";
       String comand = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
 
       DatabaseManager databaseManager = new DatabaseManager();
-      PreparedStatement preparedStatement;
-
       try {
-          databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
-            preparedStatement = databaseManager.getConnection().prepareStatement(comand);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, surname);
-            preparedStatement.setString(3, login);
-            preparedStatement.setString(4, password);
-            preparedStatement.execute();
-
+          Connection connection = databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
       } catch (SQLException e) {
           e.printStackTrace();
       }
+      PreparedStatement preparedStatement;
+      databaseManager.insertDataDB(comand, name, surname, login, password);
+
 
       if(password.equals("root")){
             out.print("Welcome, " + name + " " + surname);

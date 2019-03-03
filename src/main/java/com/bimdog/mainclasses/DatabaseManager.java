@@ -5,6 +5,7 @@ import java.sql.*;
 public class DatabaseManager {
 
     private Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
     public Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException{
         try {
@@ -20,8 +21,17 @@ public class DatabaseManager {
         return connection;
     }
 
-    public void insert(Statement statement, String comandInsert) throws SQLException{
-        statement.execute(comandInsert);
+    public void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam){
+        try {
+            preparedStatement = getConnection().prepareStatement(comandInsert);
+            preparedStatement.setString(1, columnOneParam);
+            preparedStatement.setString(2, columnTwoParam);
+            preparedStatement.setString(3, columnThreeParam);
+            preparedStatement.setString(4, columnFourParam);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ResultSet query(Statement statement, String comandQuery) throws SQLException {
