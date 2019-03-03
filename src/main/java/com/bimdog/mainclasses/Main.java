@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         //connect
-        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa7', 'vas7', 'log7', 'qwerty7');";
+        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa8', 'vas8', 'log8', 'qwerty8');";
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
 
@@ -29,7 +29,7 @@ public class Main {
 
         //query
         String query = "SELECT * from users";
-        ResultSet resultSet = statement.executeQuery(query);
+        ResultSet resultSet = databaseManager.query(statement, query);
 
         LinkedList<User> listUser = new LinkedList<>();
         User user;
