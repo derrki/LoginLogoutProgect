@@ -9,11 +9,13 @@ public class DatabaseManager {
 
     private Connection connection;
 
-    public boolean connect(String host_mysql, String username_mysql, String password_mysql) throws SQLException {
+    public void connect(String host_mysql, String username_mysql, String password_mysql) throws SQLException {
         connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
-        return !connection.isClosed();
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 
     public void insert(Statement statement, String comand) throws SQLException{
         statement.execute(comand);
@@ -22,6 +24,5 @@ public class DatabaseManager {
     public void closeConnection() throws SQLException {
        connection.close();
     }
-
 }
 

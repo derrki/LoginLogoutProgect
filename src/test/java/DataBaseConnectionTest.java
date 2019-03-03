@@ -1,12 +1,14 @@
 import com.bimdog.mainclasses.DatabaseManager;
 import org.junit.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DataBaseConnectionTest {
 
 
     private DatabaseManager databaseManager;
+    private Connection connection;
 
     String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
             "?verifyServerCertificate=false"+
@@ -30,7 +32,6 @@ public class DataBaseConnectionTest {
         try {
             databaseManager.closeConnection();
             System.out.println("конект закрито");
-
         } catch (NullPointerException e) {
             System.out.println("конект не був відкритий - " + e);
         }
@@ -39,7 +40,9 @@ public class DataBaseConnectionTest {
     @Test
     public void test_connection_to_db_with_all_correct_input_parameters() {
         try {
-            Assert.assertTrue(databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL));
+          databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+          connection = databaseManager.getConnection();
+            Assert.assertTrue(!connection.isClosed());
             System.out.println("OK. Base test");
         } catch (SQLException e) {
             e.printStackTrace();
