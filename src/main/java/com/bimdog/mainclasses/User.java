@@ -34,4 +34,15 @@ public class User {
     public String getCountry() {
         return country;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }
