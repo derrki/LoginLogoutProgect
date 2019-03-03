@@ -8,11 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    @Override
+    public static final String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
+            "?verifyServerCertificate=false"+
+           "&useSSL=false"+
+            "&requireSSL=false"+
+            "&useLegacyDatetimeCode=false"+
+            "&amp"+
+            "&serverTimezone=UTC";
+  public static final String USERNAME_MYSQL = "root";
+  public static final String PASSWORD_MYSQL = "root";
+
+
+  @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         request.getRequestDispatcher("link.html").include(request, response);
@@ -22,7 +37,28 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        if(password.equals("root")){
+      // String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa8', 'vas8', 'log8', 'qwerty8');";
+      String comand = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
+
+      DatabaseManager databaseManager = new DatabaseManager();
+      PreparedStatement preparedStatement;
+
+      try {
+          databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+            preparedStatement = databaseManager.getConnection().prepareStatement(comand);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            preparedStatement.setString(3, login);
+            preparedStatement.setString(4, password);
+            preparedStatement.execute();
+
+      } catch (SQLException e) {
+          e.printStackTrace();
+      } catch (ClassNotFoundException e) {
+          e.printStackTrace();
+      }
+
+      if(password.equals("root")){
             out.print("Welcome, " + name + " " + surname);
             HttpSession session = request.getSession();
             session.setAttribute("name", name);
@@ -33,6 +69,6 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.html").include(request, response);
         }
         out.close();
-
     }
+
 }

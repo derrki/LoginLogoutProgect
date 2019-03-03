@@ -46,6 +46,8 @@ public class DataBaseConnectionTest {
             System.out.println("OK. Base test");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -56,6 +58,8 @@ public class DataBaseConnectionTest {
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -66,6 +70,8 @@ public class DataBaseConnectionTest {
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,6 +82,8 @@ public class DataBaseConnectionTest {
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -86,6 +94,8 @@ public class DataBaseConnectionTest {
             Assert.fail();
         } catch (SQLException e) {
             System.out.println("OK");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

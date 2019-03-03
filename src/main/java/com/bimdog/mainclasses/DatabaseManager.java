@@ -6,7 +6,8 @@ public class DatabaseManager {
 
     private Connection connection;
 
-    public void connect(String host_mysql, String username_mysql, String password_mysql) throws SQLException {
+    public void connect(String host_mysql, String username_mysql, String password_mysql) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
     }
 

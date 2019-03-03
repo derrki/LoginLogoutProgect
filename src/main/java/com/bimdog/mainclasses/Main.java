@@ -17,16 +17,18 @@ public class Main {
 //
 //    public static void main(String[] args) throws SQLException {
 //
+//
+//
 //        //connect
-//        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa8', 'vas8', 'log8', 'qwerty8');";
+//        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa9', 'vas9', 'log9', 'qwerty9');";
 //        DatabaseManager databaseManager = new DatabaseManager();
 //        databaseManager.connect(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
 //
 //        //insert
 //        Statement statement = databaseManager.getConnection().createStatement();
 //        databaseManager.insert(statement, comand);
-//
-//
+
+
 //        //query
 //        String query = "SELECT * from users";
 //        ResultSet resultSet = databaseManager.query(statement, query);
@@ -49,5 +51,5 @@ public class Main {
 //
 //            System.out.println(userOne);
 //        }
-//    }
+  //  }
 }
