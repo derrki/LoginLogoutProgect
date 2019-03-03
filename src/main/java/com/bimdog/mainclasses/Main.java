@@ -28,7 +28,7 @@ public class Main {
 
 
         //query
-        String query = "SELECT * from users";
+        String query = "SELECT * from users where id>5";
         ResultSet resultSet = databaseManager.query(statement, query);
 
         LinkedList<User> listUser = new LinkedList<>();
