@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "Login", urlPatterns = { "/Login" })
+@WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
 
     public static final String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
@@ -33,8 +33,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //String login = request.getParameter("login");
-        String login = "qwe";
+        String login = request.getParameter("login");
         String password = request.getParameter("password");
         String errorMsg = null;
 
