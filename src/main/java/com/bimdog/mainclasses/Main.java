@@ -16,21 +16,25 @@ public class Main {
 //
 //    public static void main(String[] args) throws SQLException {
 //
-//
-//
-//        //connectDB
+////
+////
+////        //connectDB
 //        String comand = "INSERT INTO users(name, surname, login, password) VALUES('Vasa9', 'vas9', 'log9', 'qwerty9');";
 //        DatabaseManager databaseManager = new DatabaseManager();
 //        databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
 //
-//        //insert
-//        Statement statement = databaseManager.getConnection().createStatement();
-//        databaseManager.insert(statement, comand);
-
-
+////        //insert
+//       Statement statement = databaseManager.getConnection().createStatement();
+//   //    databaseManager.insert(statement, comand);
+//
+//
 //        //query
 //        String query = "SELECT * from users";
 //        ResultSet resultSet = databaseManager.query(statement, query);
+//
+//        if(!resultSet.next()){
+//            System.out.println("Таблиця порожня");
+//        }
 //
 //        LinkedList<User> listUser = new LinkedList<>();
 //        User user;
@@ -50,5 +54,5 @@ public class Main {
 //
 //            System.out.println(userOne);
 //        }
-  //  }
+//    }
 }
