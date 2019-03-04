@@ -45,7 +45,6 @@ public class RegisterServlet extends HttpServlet {
         if(login == null || login.equals("")){
             errorMsg = "Login can't be null or empty.";
         }
-
         if(password == null || password.equals("")){
             errorMsg = "Password can't be null or empty.";
         }
@@ -60,7 +59,8 @@ public class RegisterServlet extends HttpServlet {
             requestDispatcher.include(request, response);
         }
         else {
-            String comand = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
+            String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
+            String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
 
             DatabaseManager databaseManager = new DatabaseManager();
             try {
@@ -69,7 +69,8 @@ public class RegisterServlet extends HttpServlet {
                 e.printStackTrace();
             }
             PreparedStatement preparedStatement;
-            databaseManager.insertDataDB(comand, name, surname, login, password);
+            databaseManager.insertDataDB(sqlUsers, name, surname, login, password);
+            databaseManager.insertDataDB(sqlCountry, country);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
             PrintWriter out= response.getWriter();
             out.println("<font color=green>Registration successful, please login below.</font>");

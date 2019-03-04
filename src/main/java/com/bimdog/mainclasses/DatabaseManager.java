@@ -21,6 +21,16 @@ public class DatabaseManager {
         return connection;
     }
 
+    public void insertDataDB(String comandInsert, String columnOneParam) {
+        try {
+            preparedStatement = getConnection().prepareStatement(comandInsert);
+            preparedStatement.setString(1, columnOneParam);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam){
         try {
             preparedStatement = getConnection().prepareStatement(comandInsert);
