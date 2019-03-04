@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    
+
     public static final String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db"+
             "?verifyServerCertificate=false"+
            "&useSSL=false"+
