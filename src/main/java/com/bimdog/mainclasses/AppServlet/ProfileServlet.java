@@ -26,7 +26,7 @@ public class ProfileServlet extends HttpServlet {
         }
         else{
             out.print("Please login first");
-            request.getRequestDispatcher("login.html").include(request, response);
+            request.getRequestDispatcher("login0.html").include(request, response);
         }
         out.close();
     }
