@@ -26,6 +26,7 @@ public class DatabaseManager {
             preparedStatement = getConnection().prepareStatement(comandInsert);
             preparedStatement.setString(1, columnOneParam);
             preparedStatement.execute();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,6 +40,7 @@ public class DatabaseManager {
             preparedStatement.setString(3, columnThreeParam);
             preparedStatement.setString(4, columnFourParam);
             preparedStatement.execute();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

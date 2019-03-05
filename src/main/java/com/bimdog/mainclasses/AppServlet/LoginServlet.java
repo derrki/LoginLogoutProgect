@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.LinkedList;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
@@ -69,6 +70,12 @@ public class LoginServlet extends HttpServlet {
                 resultSetUsers = preparedStatement.executeQuery();
 
 
+                LinkedList<String> linkedList = new LinkedList<>();
+                linkedList.add("vasa1");
+                linkedList.add("vasa2");
+                linkedList.add("vasa3");
+                linkedList.add("vasa4");
+                linkedList.add("vasa5");
 
                 if(resultSetUsers != null && resultSetUsers.next()){
 
@@ -83,7 +90,8 @@ public class LoginServlet extends HttpServlet {
                     user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
                     }
                     HttpSession session = request.getSession();
-                    session.setAttribute("User", user);
+                    session.setAttribute("list", linkedList);
+                    //session.setAttribute("User", user);
                     response.sendRedirect("home.jsp");
                     System.out.println(user);
                 } else {

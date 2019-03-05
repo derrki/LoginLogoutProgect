@@ -1,4 +1,5 @@
 <%@page import="com.bimdog.mainclasses.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
          pageEncoding="US-ASCII"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,9 +13,18 @@
 <h3>Hi <%=user.getName() %></h3>
 <strong>Your login</strong>: <%=user.getLogin() %><br>
 <strong>Your Country</strong>: <%=user.getCountry() %><br>
+
 <br>
 <form action="Logout" method="post">
     <input type="submit" value="Logout" >
 </form>
+
+<c:forEach items="${list}" var="element">
+    <tr>
+        <td>${element.FirstName}</td>
+        <td>${element.LastName}</td>  </tr>
+</c:forEach>
+
 </body>
 </html>
+

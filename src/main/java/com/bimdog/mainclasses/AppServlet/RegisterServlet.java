@@ -30,12 +30,16 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //дані одержані з форми вводу register.html
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String country = request.getParameter("country");
         String errorMsg = null;
+
+        //внутрішня валідація одержаних даних
         if(name == null || name.equals("")){
             errorMsg = "Name can't be null or empty.";
         }
