@@ -68,19 +68,30 @@ public class LoginServlet extends HttpServlet {
                         String query = "SELECT * from users";
                         ResultSet resultSet =DatabaseManager.query(query);
                         listUser = listAllUser(resultSet);
-                    }
-                    //об'єкт user
-                    User user = null;
-                    if(resultSetCountry.next()){
-                        String country = resultSetCountry.getString("country");
-                        user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
-                    }
 
-                    //вивід прочитаних даних на jsp
-                    HttpSession session = request.getSession();
-                    session.setAttribute("ListUser", listUser);
-                    session.setAttribute("User", user);
-                    response.sendRedirect("home.jsp");
+                        User user = null;
+                        if(resultSetCountry.next()){
+                            String country = resultSetCountry.getString("country");
+                            user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
+                        }
+
+                        //вивід прочитаних даних на jsp
+                        HttpSession session = request.getSession();
+                        session.setAttribute("ListUser", listUser);
+                        session.setAttribute("User", user);
+                        response.sendRedirect("homeAll.jsp");
+                    } else {
+                        //об'єкт user
+                        User user = null;
+                        if (resultSetCountry.next()) {
+                            String country = resultSetCountry.getString("country");
+                            user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"), resultSetUsers.getString("password"), country);
+                        }
+                        //вивід прочитаних даних на jsp
+                        HttpSession session = request.getSession();
+                        session.setAttribute("User", user);
+                        response.sendRedirect("home.jsp");
+                    }
 
                 } else {
                     response.setContentType("text/html");
