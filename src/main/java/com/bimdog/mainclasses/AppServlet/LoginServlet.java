@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
@@ -48,6 +49,8 @@ public class LoginServlet extends HttpServlet {
 
             ResultSet resultSetUsers = null;
             ResultSet resultSetCountry = null;
+            LinkedList<User> listUser = null;
+
 
             try {
                 //вибірка даних з таблиці
@@ -57,13 +60,15 @@ public class LoginServlet extends HttpServlet {
 
                     int parameterSearchCountry = resultSetUsers.getInt("id");
 
-                    if(parameterSearchCountry==1){
-                        queryAll();
-                    }
-
                     String sqlCountry = "SELECT id, country from user_country WHERE id=" + parameterSearchCountry;
                     resultSetCountry = DatabaseManager.query(sqlCountry);
 
+
+                    if(parameterSearchCountry==1){
+                        String query = "SELECT * from users";
+                        ResultSet resultSet =DatabaseManager.query(query);
+                        listUser = listAllUser(resultSet);
+                    }
                     //об'єкт user
                     User user = null;
                     if(resultSetCountry.next()){
@@ -73,6 +78,7 @@ public class LoginServlet extends HttpServlet {
 
                     //вивід прочитаних даних на jsp
                     HttpSession session = request.getSession();
+                    session.setAttribute("ListUser", listUser);
                     session.setAttribute("User", user);
                     response.sendRedirect("home.jsp");
 
@@ -91,11 +97,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    static LinkedList<User> queryAll() throws SQLException {
-
-//            //query
-            String query = "SELECT * from users";
-            ResultSet resultSet =DatabaseManager.query(query);
+    static LinkedList<User> listAllUser(ResultSet resultSet) throws SQLException {
 
             LinkedList<User> listUser = new LinkedList<>();
             User user;
