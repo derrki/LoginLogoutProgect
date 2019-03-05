@@ -13,16 +13,6 @@ import java.sql.SQLException;
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
 
-   private static final String HOST_MYSQL = "jdbc:mysql://localhost:3306/users_db" +
-            "?verifyServerCertificate=false" +
-            "&useSSL=false" +
-            "&requireSSL=false" +
-            "&useLegacyDatetimeCode=false" +
-            "&amp" +
-            "&serverTimezone=UTC";
-    private static final String USERNAME_MYSQL = "root";
-    private static final String PASSWORD_MYSQL = "root";
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -51,6 +41,7 @@ public class RegisterServlet extends HttpServlet {
             errorMsg = "Country can't be null or empty.";
         }
 
+        //вивід повідомлення про невірний ввід даних
         if (errorMsg != null) {
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/register.html");
             PrintWriter out = response.getWriter();
@@ -61,16 +52,11 @@ public class RegisterServlet extends HttpServlet {
             String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
             String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
 
-            //запис в базу даних
-            try {
-                DatabaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            //запис даних в базу
             DatabaseManager.insertDataDB(sqlUsers, name, surname, login, password);
             DatabaseManager.insertDataDB(sqlCountry, country);
 
-
+            //вивід повідомлення про успішний ввід даних
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             request.setCharacterEncoding("UTF-8");

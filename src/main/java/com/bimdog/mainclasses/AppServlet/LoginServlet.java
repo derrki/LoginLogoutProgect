@@ -35,10 +35,12 @@ public class LoginServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
+        //дані одержані з форми вводу login.html
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String errorMsg = null;
 
+        //внутрішня валідація одержаних даних
         if(login == null || login.equals("")){
             System.out.println(" login =" +login);
             errorMsg = "Login can't be null or empty.";
@@ -55,10 +57,11 @@ public class LoginServlet extends HttpServlet {
             out.println("<font color=red>"+errorMsg+"</font>");
             requestDispatcher.include(request, response);
         }else{
+
+            //sql запит для вибірки даних базу
             String sqlUsers = "SELECT id, name, surname, login, password from users WHERE login=? and password=? limit 1";
-            DatabaseManager databaseManager = new DatabaseManager();
             try {
-                Connection connection = databaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+                Connection connection = DatabaseManager.connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -68,7 +71,7 @@ public class LoginServlet extends HttpServlet {
             ResultSet resultSetCountry = null;
 
             try {
-                preparedStatement = databaseManager.getConnection().prepareStatement(sqlUsers);
+                preparedStatement = DatabaseManager.getConnection().prepareStatement(sqlUsers);
                 preparedStatement.setString(1, login);
                 preparedStatement.setString(2, password);
                 resultSetUsers = preparedStatement.executeQuery();
@@ -78,10 +81,10 @@ public class LoginServlet extends HttpServlet {
                 if(resultSetUsers != null && resultSetUsers.next()){
 
                     preparedStatement.setString(1, resultSetUsers.getString("id"));
-                    statement = databaseManager.getConnection().createStatement();
+                    statement = DatabaseManager.getConnection().createStatement();
 
                     String sqlCountry = "SELECT id, country from user_country WHERE id=" + resultSetUsers.getString("id");
-                    ResultSet resultSet = databaseManager.query(statement, sqlCountry);
+                    ResultSet resultSet = DatabaseManager.query(statement, sqlCountry);
                     User user = null;
                     if(resultSet.next()){
                         String country = resultSet.getString("country");
