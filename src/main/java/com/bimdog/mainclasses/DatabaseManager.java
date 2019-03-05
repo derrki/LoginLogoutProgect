@@ -4,10 +4,10 @@ import java.sql.*;
 
 public class DatabaseManager {
 
-    private Connection connection = null;
-    PreparedStatement preparedStatement = null;
+    private static Connection connection = null;
+    private static PreparedStatement preparedStatement = null;
 
-    public Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException{
+    public static Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
@@ -17,11 +17,11 @@ public class DatabaseManager {
         return connection;
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
-    public void insertDataDB(String comandInsert, String columnOneParam) {
+    public static void insertDataDB(String comandInsert, String columnOneParam) {
         try {
             preparedStatement = getConnection().prepareStatement(comandInsert);
             preparedStatement.setString(1, columnOneParam);
@@ -32,7 +32,7 @@ public class DatabaseManager {
         }
     }
 
-    public void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam){
+    public static void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam){
         try {
             preparedStatement = getConnection().prepareStatement(comandInsert);
             preparedStatement.setString(1, columnOneParam);
@@ -50,7 +50,7 @@ public class DatabaseManager {
         return statement.executeQuery(comandQuery);
     }
 
-    public void disconnectDb() {
+    public static void disconnectDb() {
         try {
             connection.close();
         } catch (SQLException e) {

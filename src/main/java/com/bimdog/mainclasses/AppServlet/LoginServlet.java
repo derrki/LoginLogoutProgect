@@ -31,6 +31,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String errorMsg = null;
@@ -70,12 +74,6 @@ public class LoginServlet extends HttpServlet {
                 resultSetUsers = preparedStatement.executeQuery();
 
 
-                LinkedList<String> linkedList = new LinkedList<>();
-                linkedList.add("vasa1");
-                linkedList.add("vasa2");
-                linkedList.add("vasa3");
-                linkedList.add("vasa4");
-                linkedList.add("vasa5");
 
                 if(resultSetUsers != null && resultSetUsers.next()){
 
@@ -86,12 +84,11 @@ public class LoginServlet extends HttpServlet {
                     ResultSet resultSet = databaseManager.query(statement, sqlCountry);
                     User user = null;
                     if(resultSet.next()){
-                    String country = resultSet.getString("country");
-                    user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
+                        String country = resultSet.getString("country");
+                        user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
                     }
                     HttpSession session = request.getSession();
-                    session.setAttribute("list", linkedList);
-                    //session.setAttribute("User", user);
+                    session.setAttribute("User", user);
                     response.sendRedirect("home.jsp");
                     System.out.println(user);
                 } else {
