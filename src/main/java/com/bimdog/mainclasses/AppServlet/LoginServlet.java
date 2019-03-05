@@ -21,10 +21,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
         //дані одержані з форми вводу login.html
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -47,35 +43,44 @@ public class LoginServlet extends HttpServlet {
             requestDispatcher.include(request, response);
         }else{
 
-            //sql запит для вибірки даних базу
+            //sql запит для вибірки з таблиці з параметрами
             String sqlUsers = "SELECT id, name, surname, login, password from users WHERE login=? and password=? limit 1";
 
             ResultSet resultSetUsers = null;
             ResultSet resultSetCountry = null;
 
             try {
+                //вибірка даних з таблиці
                 resultSetUsers = DatabaseManager.query(sqlUsers, login, password);
 
                 if(resultSetUsers != null && resultSetUsers.next()){
 
                     String parameterSearchCountry = resultSetUsers.getString("id");
+
                     String sqlCountry = "SELECT id, country from user_country WHERE id=" + parameterSearchCountry;
                     resultSetCountry = DatabaseManager.query(sqlCountry);
 
+                    //об'єкт user
                     User user = null;
                     if(resultSetCountry.next()){
                         String country = resultSetCountry.getString("country");
                         user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
                     }
+
+                    //вивід прочитаних даних на jsp
                     HttpSession session = request.getSession();
                     session.setAttribute("User", user);
                     response.sendRedirect("home.jsp");
                     System.out.println(user);
+
                 } else {
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+                    response.setContentType("text/html");
+                    response.setCharacterEncoding("UTF-8");
+                    request.setCharacterEncoding("UTF-8");
                     PrintWriter out= response.getWriter();
-                    out.println("<font color=red>No user found with given email id, please register first.</font>");
-                    rd.include(request, response);
+                    out.println("<link rel=\"stylesheet\" href=\"style.css\">");
+                    out.println("<font color=red>Не знайдено користувача з таким логіном чи паролем</font>");
+                    out.println("<p><a href=\"login.html\">спробувати ще</a></p>");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

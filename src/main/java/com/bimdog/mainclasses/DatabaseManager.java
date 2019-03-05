@@ -69,7 +69,9 @@ public class DatabaseManager {
         preparedStatement.setString(1, parameterOne);
         preparedStatement.setString(2, parameterTwo);
         resultSet = preparedStatement.executeQuery();
-
+//        resultSet.close();
+//        preparedStatement.close(); //TODO не працює з закритими ресами
+//        disconnectDb();
         return resultSet;
     }
 
@@ -77,11 +79,13 @@ public class DatabaseManager {
         connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
         statement = DatabaseManager.getConnection().createStatement();
         resultSet = statement.executeQuery(comandQuery);
+//        statement.close();
+//        resultSet.close();//TODO не працює з закритими ресами
+//        disconnectDb();
         return resultSet;
     }
 
     public static void disconnectDb() {
-
         try {
             connection.close();
         } catch (SQLException e) {

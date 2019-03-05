@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<link rel=\"stylesheet\" href=\"style.css\">");
             out.println("<font color=green>Реєстрація успішна, будь ласка, увійдіть.</font>");
-            out.println("<p><a href=\"login.html\">ввійдіть!</a></p>");
+            out.println("<p><a href=\"login.html\">увійти</a></p>");
         }
     }
 }
