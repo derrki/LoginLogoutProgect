@@ -18,8 +18,9 @@ public class DatabaseManager {
     private static Connection connection = null;
     private static Statement statement = null;
     private static PreparedStatement preparedStatement = null;
+    private static ResultSet resultSet = null;
 
-    public static Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException{
+    public static Connection connectDB(String host_mysql, String username_mysql, String password_mysql) throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(host_mysql, username_mysql, password_mysql);
@@ -46,7 +47,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam){
+    public static void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam) {
         try {
             connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
             preparedStatement = getConnection().prepareStatement(comandInsert);
@@ -62,11 +63,25 @@ public class DatabaseManager {
         }
     }
 
-    public static ResultSet query(Statement statement, String comandQuery) throws SQLException {
-        return statement.executeQuery(comandQuery);
+    public static ResultSet query(String comandQuery, String parameterOne, String parameterTwo) throws SQLException {
+        connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+        preparedStatement = DatabaseManager.getConnection().prepareStatement(comandQuery);
+        preparedStatement.setString(1, parameterOne);
+        preparedStatement.setString(2, parameterTwo);
+        resultSet = preparedStatement.executeQuery();
+
+        return resultSet;
+    }
+
+    public static ResultSet query(String comandQuery) throws SQLException {
+        connectDB(HOST_MYSQL, USERNAME_MYSQL, PASSWORD_MYSQL);
+        statement = DatabaseManager.getConnection().createStatement();
+        resultSet = statement.executeQuery(comandQuery);
+        return resultSet;
     }
 
     public static void disconnectDb() {
+
         try {
             connection.close();
         } catch (SQLException e) {
