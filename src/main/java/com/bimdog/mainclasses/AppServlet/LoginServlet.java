@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
             ResultSet resultSetUsers = null;
             ResultSet resultSetCountry = null;
-            LinkedList<User> listUser = null;
+            ArrayList<User> listUser = null;
 
 
             try {
@@ -97,9 +97,9 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    static LinkedList<User> listAllUser(ResultSet resultSet) throws SQLException {
+    static ArrayList<User> listAllUser(ResultSet resultSet) throws SQLException {
 
-            LinkedList<User> listUser = new LinkedList<>();
+            ArrayList<User> listUser = new ArrayList<>();
             User user;
 
             while (resultSet.next()){
