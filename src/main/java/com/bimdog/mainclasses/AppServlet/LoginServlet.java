@@ -55,7 +55,11 @@ public class LoginServlet extends HttpServlet {
 
                 if(resultSetUsers != null && resultSetUsers.next()){
 
-                    String parameterSearchCountry = resultSetUsers.getString("id");
+                    int parameterSearchCountry = resultSetUsers.getInt("id");
+
+                    if(parameterSearchCountry==1){
+                        queryAll();
+                    }
 
                     String sqlCountry = "SELECT id, country from user_country WHERE id=" + parameterSearchCountry;
                     resultSetCountry = DatabaseManager.query(sqlCountry);
@@ -71,7 +75,6 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("User", user);
                     response.sendRedirect("home.jsp");
-                    System.out.println(user);
 
                 } else {
                     response.setContentType("text/html");
@@ -86,5 +89,31 @@ public class LoginServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+    }
+
+    static LinkedList<User> queryAll() throws SQLException {
+
+//            //query
+            String query = "SELECT * from users";
+            ResultSet resultSet =DatabaseManager.query(query);
+
+            LinkedList<User> listUser = new LinkedList<>();
+            User user;
+
+            while (resultSet.next()){
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                String country = "UA";
+                user = new User(name, surname, login, password, country);
+                listUser.add(user);
+            }
+
+            for (User userOne: listUser) {
+
+                System.out.println(userOne);
+            }
+            return listUser;
     }
 }
