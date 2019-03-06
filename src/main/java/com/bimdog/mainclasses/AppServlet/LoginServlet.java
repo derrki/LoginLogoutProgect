@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
