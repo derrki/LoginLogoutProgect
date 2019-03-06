@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
                     resultSetCountry = DatabaseManager.query(sqlCountry);
 
 
+                    //перший зареєстрований користувач стає адміністратором
                     if(parameterSearchCountry==1){
                         String query = "SELECT * from users";
                         ResultSet resultSet =DatabaseManager.query(query);
@@ -112,7 +113,6 @@ public class LoginServlet extends HttpServlet {
 
             ArrayList<User> listUser = new ArrayList<>();
             User user;
-
             while (resultSet.next()){
                 String name = resultSet.getString("name");
                 String surname = resultSet.getString("surname");
@@ -121,11 +121,6 @@ public class LoginServlet extends HttpServlet {
                 String country = "UA";
                 user = new User(name, surname, login, password, country);
                 listUser.add(user);
-            }
-
-            for (User userOne: listUser) {
-
-                System.out.println(userOne);
             }
             return listUser;
     }

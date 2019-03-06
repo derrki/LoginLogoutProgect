@@ -8,11 +8,31 @@
 </head>
 <body>
 <h3>Введіть логін та пароль</h3>
-<form action="LoginServlet" method="post">
-    <strong>Логін</strong>:<input type="text" name="login"><br>
-    <strong>Пароль</strong>:<input type="password" name="password"><br>
+<form action="LoginServlet" onsubmit="return validate();"  method="post" >
+    <strong>Логін</strong>:<input type="text" name="login" id="login"><br>
+    <strong>Пароль</strong>:<input type="password" name="password" id="password"><br>
     <input type="submit" value="Login">
 </form>
+
+<script>
+      function validate() {
+        var userLogin = document.getElementById("login");
+        var userPassword = document.getElementById("password");
+
+        event.preventDefault();
+
+        if(!userLogin.value){
+            userLogin.style.border = "2px solid red";
+            return false;
+        }
+
+        if(!userPassword.value){
+            userPassword.style.border = "2px solid red";
+            return false;
+        }
+    }
+</script>
+
 <br>
 Якщо ви новий користувач,  <a href="register.html">зареєструйтесь</a>.
 </body>
