@@ -8,16 +8,52 @@
 </head>
 <body>
 <h3>Заповніть всі поля для реєстрації</h3>
-<form action="RegisterServlet" method="post">
-    <strong>Ім'я</strong>:<input type="text" name="name"><br>
-    <strong>Прізвище</strong>:<input type="text" name="surname"><br>
-    <strong>Логін</strong>:<input type="text" name="login"><br>
-    <strong>Пароль</strong>:<input type="password" name="password"><br>
-    <strong>Країна</strong>:<input type="text" name="country"><br>
+<form action="RegisterServlet" onsubmit="return validateForm();" method="post" >
+    <strong>Ім'я</strong>:<input type="text" name="name" id="name"><br>
+    <strong>Прізвище</strong>:<input type="text" name="surname" id="surname"><br>
+    <strong>Логін</strong>:<input type="text" name="login" id="login"><br>
+    <strong>Пароль</strong>:<input type="password" name="password" id="password"><br>
+    <strong>Країна</strong>:<input type="text" name="country" id="country"><br>
     <input type="submit" value="Register">
 </form>
+
+<script>
+    function validateForm() {
+        var userName = document.getElementById("name");
+        var userSurname = document.getElementById("surname");
+        var userLogin = document.getElementById("login");
+        var userPassword = document.getElementById("password");
+        var userCountry = document.getElementById("country");
+
+
+        if(!userName.value){
+            userName.style.border = "2px solid red";
+            return false;
+        }
+
+        if(!userSurname.value){
+            userSurname.style.border = "2px solid red";
+            return false;
+        }
+
+        if(!userLogin.value){
+            userLogin.style.border = "2px solid red";
+            return false;
+        }
+
+        if(!userPassword.value){
+            userPassword.style.border = "2px solid red";
+            return false;
+        }
+
+        if(!userCountry.value){
+            userCountry.style.border = "2px solid red";
+            return false;
+        }
+    }
+</script>
+
 <br>
 Якщо ви зареєстрований користувач, <a href="login.html">ввійдіть!</a>.
+
 </body>
-</html>
-</html>

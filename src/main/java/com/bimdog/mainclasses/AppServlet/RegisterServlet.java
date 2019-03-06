@@ -16,6 +16,10 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+
+
+
        //дані одержані з форми вводу register.html
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
@@ -43,11 +47,16 @@ public class RegisterServlet extends HttpServlet {
 
         //вивід повідомлення про невірний ввід даних
         if (errorMsg != null) {
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/register.html");
             PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            out.println("<link rel=\"stylesheet\" href=\"style.css\">");
             out.println("<font color=red>" + errorMsg + "</font>");
-            requestDispatcher.include(request, response);
+            out.println("<p><a href=\"register.html\">Повторити</a></p>");
+
         } else {
+
             //sql запити для запису в базу даних
             String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
             String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
@@ -63,7 +72,7 @@ public class RegisterServlet extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             out.println("<link rel=\"stylesheet\" href=\"style.css\">");
-            out.println("<font color=green>Реєстрація успішна, будь ласка, увійдіть.</font>");
+           out.println("<font color=green>Реєстрація успішна, будь ласка, увійдіть.</font>");
             out.println("<p><a href=\"login.html\">увійти</a></p>");
         }
     }
