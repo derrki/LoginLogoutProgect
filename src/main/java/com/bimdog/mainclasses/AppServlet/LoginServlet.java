@@ -15,9 +15,6 @@ import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 
-
-//ОБЕРЕЖНО ГАВНОКОД!!!! АЛЕ ПРАЦЮЄ )
-
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
 

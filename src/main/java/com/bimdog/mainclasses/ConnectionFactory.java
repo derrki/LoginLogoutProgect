@@ -1,24 +1,25 @@
 package com.bimdog.mainclasses;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
+class ConnectionFactory {
 
     private static ConnectionFactory instance;
 
     private static String DB_URL;
     private static String LOGIN;
     private static String PASSWORD;
+    private static String DRIVER;
 
     private ConnectionFactory(){
         getProperties();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -41,24 +42,36 @@ public class ConnectionFactory {
 
     private static ConnectionFactory getInstance(){
         if (instance == null){
-            return new ConnectionFactory();
+            instance = new ConnectionFactory();
+            return instance;
         }
         return instance;
     }
 
-    private static void getProperties(){
-        FileInputStream fileInputStream;
+    //одержуємо параметри конекту до БД з файлу config.properties
+    private void getProperties(){
+        InputStream inputStream = null;
         Properties properties = new Properties();
+        String propFileName = "config.properties";
         try {
-            fileInputStream = new FileInputStream("src/main/resources/data_base_settings.properties");
-                properties.load(fileInputStream);
+            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            properties.load(inputStream);
                 DB_URL = properties.getProperty("DB_URL");
-                LOGIN = properties.getProperty("USERNAME_MYSQL");
-                PASSWORD = properties.getProperty("PASSWORD_MYSQL");
-
+                LOGIN = properties.getProperty("LOGIN");
+                PASSWORD = properties.getProperty("PASSWORD");
+                DRIVER = properties.getProperty("DRIVER");
         } catch (IOException e) {
             System.out.println("ERROR: The properties file does not exist.");
             e.printStackTrace();
+        }
+        finally {
+            if (inputStream!=null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
