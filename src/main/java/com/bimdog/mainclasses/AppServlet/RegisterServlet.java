@@ -1,5 +1,9 @@
 package com.bimdog.mainclasses.AppServlet;
+
+import com.bimdog.mainclasses.DataBaseInsert;
 import com.bimdog.mainclasses.DatabaseManager;
+import com.bimdog.mainclasses.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,13 +55,10 @@ public class RegisterServlet extends HttpServlet {
 
         } else {
 
-            //sql запити для запису в базу даних
-            String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
-            String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
+            User user = new User(name, surname, login, password, country);
 
             //запис даних в базу
-            DatabaseManager.insertDataDB(sqlUsers, name, surname, login, password);
-            DatabaseManager.insertDataDB(sqlCountry, country);
+            DataBaseInsert.insert(user);
 
             //вивід повідомлення про успішний ввід даних
             response.setContentType("text/html");

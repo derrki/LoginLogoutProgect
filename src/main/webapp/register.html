@@ -8,7 +8,7 @@
 </head>
 <body>
 <h3>Заповніть всі поля для реєстрації</h3>
-<form action="RegisterServlet" onsubmit="return validateForm();" method="post" >
+<form action="RegisterServletNew" onsubmit="return validateForm();" method="post" >
     <strong>Ім'я</strong>:<input type="text" name="name" id="name"><br>
     <strong>Прізвище</strong>:<input type="text" name="surname" id="surname"><br>
     <strong>Логін</strong>:<input type="text" name="login" id="login"><br>
@@ -24,7 +24,6 @@
         var userLogin = document.getElementById("login");
         var userPassword = document.getElementById("password");
         var userCountry = document.getElementById("country");
-
 
         if(!userName.value){
             userName.style.border = "2px solid red";

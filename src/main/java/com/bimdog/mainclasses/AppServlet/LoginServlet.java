@@ -2,7 +2,6 @@ package com.bimdog.mainclasses.AppServlet;
 
 import com.bimdog.mainclasses.DatabaseManager;
 import com.bimdog.mainclasses.User;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

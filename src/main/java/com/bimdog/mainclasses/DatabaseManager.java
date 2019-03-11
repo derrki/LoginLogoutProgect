@@ -1,5 +1,7 @@
 package com.bimdog.mainclasses;
 
+import com.bimdog.mainclasses.util.ConnectionFactory;
+
 import java.sql.*;
 
 public class DatabaseManager {
@@ -12,35 +14,6 @@ public class DatabaseManager {
 
     public static Connection getConnection() {
         return connection;
-    }
-
-    public static void insertDataDB(String comandInsert, String columnOneParam) {
-        try {
-            connection=ConnectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(comandInsert);
-            preparedStatement.setString(1, columnOneParam);
-            preparedStatement.execute();
-            preparedStatement.close();
-            disconnectDb();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void insertDataDB(String comandInsert, String columnOneParam, String columnTwoParam, String columnThreeParam, String columnFourParam) {
-        try {
-            connection=ConnectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(comandInsert);
-            preparedStatement.setString(1, columnOneParam);
-            preparedStatement.setString(2, columnTwoParam);
-            preparedStatement.setString(3, columnThreeParam);
-            preparedStatement.setString(4, columnFourParam);
-            preparedStatement.execute();
-            preparedStatement.close();
-            disconnectDb();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static ResultSet query(String comandQuery, String parameterOne, String parameterTwo) throws SQLException {
