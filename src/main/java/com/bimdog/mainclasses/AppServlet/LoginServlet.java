@@ -17,6 +17,7 @@ import java.util.ArrayList;
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
 
+    DatabaseManager databaseManager = new DatabaseManager();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -41,7 +42,6 @@ public class LoginServlet extends HttpServlet {
             out.println("<font color=red>"+errorMsg+"</font>");
             requestDispatcher.include(request, response);
         }else{
-
             //sql запит для вибірки з таблиці з параметрами
             String sqlUsers = "SELECT id, name, surname, login, password from users WHERE login=? and password=? limit 1";
 
@@ -49,23 +49,24 @@ public class LoginServlet extends HttpServlet {
             ResultSet resultSetCountry = null;
             ArrayList<User> listUser = null;
 
-
             try {
                 //вибірка даних з таблиці
-                resultSetUsers = DatabaseManager.query(sqlUsers, login, password);
+                resultSetUsers = databaseManager.query(sqlUsers, login, password);
 
                 if(resultSetUsers != null && resultSetUsers.next()){
 
                     int parameterSearchCountry = resultSetUsers.getInt("id");
 
                     String sqlCountry = "SELECT id, country from user_country WHERE id=" + parameterSearchCountry;
-                    resultSetCountry = DatabaseManager.query(sqlCountry);
+                    resultSetCountry = databaseManager.query(sqlCountry);
 
 
                     //перший зареєстрований користувач стає адміністратором
                     if(parameterSearchCountry==1){
+                        //ViewAdminServlet viewAdminServlet = new ViewAdminServlet();
+                        //viewAdminServlet.doGet(request, response);
                         String query = "SELECT * from users";
-                        ResultSet resultSet =DatabaseManager.query(query);
+                        ResultSet resultSet =databaseManager.query(query);
                         listUser = listAllUser(resultSet);
 
                         User user = null;
@@ -108,7 +109,6 @@ public class LoginServlet extends HttpServlet {
     }
 
     static ArrayList<User> listAllUser(ResultSet resultSet) throws SQLException {
-
             ArrayList<User> listUser = new ArrayList<>();
             User user;
             while (resultSet.next()){

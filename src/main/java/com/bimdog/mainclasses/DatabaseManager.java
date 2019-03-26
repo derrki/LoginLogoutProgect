@@ -10,14 +10,14 @@ public class DatabaseManager {
     private static Statement statement = null;
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
-
+    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
 
     public static Connection getConnection() {
         return connection;
     }
 
-    public static ResultSet query(String comandQuery, String parameterOne, String parameterTwo) throws SQLException {
-        connection=ConnectionFactory.getConnection();
+    public ResultSet query(String comandQuery, String parameterOne, String parameterTwo) throws SQLException {
+        connection=connectionFactory.getConnection();
         preparedStatement = connection.prepareStatement(comandQuery);
         preparedStatement.setString(1, parameterOne);
         preparedStatement.setString(2, parameterTwo);
@@ -28,8 +28,8 @@ public class DatabaseManager {
         return resultSet;
     }
 
-    public static ResultSet query(String comandQuery) throws SQLException {
-        connection=ConnectionFactory.getConnection();
+    public ResultSet query(String comandQuery) throws SQLException {
+        connection=connectionFactory.getConnection();
         statement = connection.createStatement();
         resultSet = statement.executeQuery(comandQuery);
 //        statement.close();

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class ConnectionFactory {
 
-    private static ConnectionFactory instance;
+    private static ConnectionFactory instance = null;
 
     private static String DB_URL;
     private static String LOGIN;
@@ -25,7 +25,7 @@ public class ConnectionFactory {
         }
     }
 
-    private Connection createConnection(){
+    public Connection getConnection(){
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(DB_URL, LOGIN, PASSWORD);
@@ -36,14 +36,9 @@ public class ConnectionFactory {
         return connection;
     }
 
-    public static Connection getConnection(){
-        return getInstance().createConnection();
-    }
-
-    private static ConnectionFactory getInstance(){
+   public static ConnectionFactory getInstance(){
         if (instance == null){
             instance = new ConnectionFactory();
-            return instance;
         }
         return instance;
     }

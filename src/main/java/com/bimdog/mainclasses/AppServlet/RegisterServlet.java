@@ -1,9 +1,6 @@
 package com.bimdog.mainclasses.AppServlet;
 
 import com.bimdog.mainclasses.DataBaseInsert;
-import com.bimdog.mainclasses.DatabaseManager;
-import com.bimdog.mainclasses.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
+@WebServlet(name = "RegisterServletNew", urlPatterns = {"/RegisterServletNew"})
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -55,10 +52,9 @@ public class RegisterServlet extends HttpServlet {
 
         } else {
 
-            User user = new User(name, surname, login, password, country);
-
             //запис даних в базу
-            DataBaseInsert.insert(user);
+            DataBaseInsert dataBaseInsert = new DataBaseInsert();
+            dataBaseInsert.insert(name, surname, login, password, country);
 
             //вивід повідомлення про успішний ввід даних
             response.setContentType("text/html");
@@ -67,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             out.println("<link rel=\"stylesheet\" href=\"style.css\">");
-           out.println("<font color=green>Реєстрація успішна, будь ласка, увійдіть.</font>");
+            out.println("<font color=green>Реєстрація успішна, будь ласка, увійдіть.</font>");
             out.println("<p><a href=\"login.html\">увійти</a></p>");
         }
     }

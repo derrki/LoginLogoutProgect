@@ -8,34 +8,30 @@ import java.sql.SQLException;
 
 public class DataBaseInsert {
 
-    private static String name;
-    private static String surname;
-    private static String login;
-    private static String password;
-    private static String country;
-    private static Connection connection = null;
-    private static PreparedStatement preparedStatement = null;
+    private ConnectionFactory conFactory = ConnectionFactory.getInstance();
 
-    //sql запити для запису в базу даних
-    static String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
-    static String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
+    public void insert(String name, String surname, String login, String password, String country) {
 
+        Connection connection = null;
+        PreparedStatement pStatement = null;
 
-    public static void insert(User user) {
-        getDataUser(user);
-        connection = ConnectionFactory.getConnection();
+        //sql запити для запису в базу даних
+        String sqlUsers = "INSERT INTO users(name, surname, login, password) VALUES(?,?,?,?);";
+        String sqlCountry = "INSERT INTO user_country(country) VALUES(?);";
+
         try {
-            preparedStatement = connection.prepareStatement(sqlUsers);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, surname);
-            preparedStatement.setString(3, login);
-            preparedStatement.setString(4, password);
-            preparedStatement.execute();
+            connection = conFactory.getConnection();
+            pStatement = connection.prepareStatement(sqlUsers);
+            pStatement.setString(1, name);
+            pStatement.setString(2, surname);
+            pStatement.setString(3, login);
+            pStatement.setString(4, password);
+            pStatement.execute();
 
-            preparedStatement = connection.prepareStatement(sqlCountry);
-            preparedStatement.setString(1, country);
-            preparedStatement.execute();
-            preparedStatement.close();
+            pStatement = connection.prepareStatement(sqlCountry);
+            pStatement.setString(1, country);
+            pStatement.execute();
+            pStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,13 +45,5 @@ public class DataBaseInsert {
                 }
             }
         }
-    }
-
-    private static void getDataUser(User user) {
-        name = user.getName();
-        surname = user.getSurname();
-        login = user.getLogin();
-        password = user.getPassword();
-        country = user.getCountry();
     }
 }
