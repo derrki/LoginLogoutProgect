@@ -28,7 +28,6 @@ public class RegisterServlet extends HttpServlet {
         //внутрішня валідація одержаних даних
         String errorMsg = Validation.validationFormData(name, surname, login, password, country);
 
-
         //вивід повідомлення про невірний ввід даних
         if (errorMsg != null) {
             PrintWriter out = response.getWriter();

@@ -1,11 +1,9 @@
 package com.bimdog.mainclasses.model;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class ConnectionFactory {
 
@@ -45,28 +43,10 @@ public class ConnectionFactory {
 
     //одержуємо параметри конекту до БД з файлу config.properties
     private void getProperties(){
-        InputStream inputStream = null;
-        Properties properties = new Properties();
-        String propFileName = "config.properties";
-        try {
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-            properties.load(inputStream);
-                DB_URL = properties.getProperty("DB_URL");
-                LOGIN = properties.getProperty("LOGIN");
-                PASSWORD = properties.getProperty("PASSWORD");
-                DRIVER = properties.getProperty("DRIVER");
-        } catch (IOException e) {
-            System.out.println("ERROR: The properties file does not exist.");
-            e.printStackTrace();
-        }
-        finally {
-            if (inputStream!=null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ResourceBundle resource = ResourceBundle.getBundle("config");
+        DB_URL = resource.getString("DB_URL");
+        LOGIN = resource.getString("LOGIN");
+        PASSWORD = resource.getString("PASSWORD");
+        DRIVER = resource.getString("DRIVER");
     }
 }
