@@ -1,7 +1,9 @@
 package com.bimdog.mainclasses.controller;
 
+import com.bimdog.mainclasses.User;
 import com.bimdog.mainclasses.model.DAOException;
 import com.bimdog.mainclasses.model.UserDao;
+import com.bimdog.mainclasses.util.UserRole;
 import com.bimdog.mainclasses.util.Validation;
 
 import javax.servlet.ServletException;
@@ -24,6 +26,7 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String country = request.getParameter("country");
+        String role = null;
 
         //внутрішня валідація одержаних даних
         String errorMsg = Validation.validationFormData(name, surname, login, password, country);
@@ -42,8 +45,11 @@ public class RegisterServlet extends HttpServlet {
 
             //запис даних в базу
             UserDao userDao = new UserDao();
+
             try {
-                userDao.insertUser(name, surname, login, password, country);
+                User user = userDao.readData();
+                role = UserRole.setUserRole(user);
+                userDao.insertUser(name, surname, login, password, country, role);
             } catch (DAOException e) {
                 e.printStackTrace();
             }

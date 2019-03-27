@@ -6,6 +6,9 @@ public class User {
     private String login;
     private String password;
     private String country;
+    private String role;
+
+    public User(){}
 
     public User(String name, String surname, String login, String password, String country) {
         this.name = name;
@@ -13,6 +16,30 @@ public class User {
         this.login = login;
         this.password = password;
         this.country = country;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
