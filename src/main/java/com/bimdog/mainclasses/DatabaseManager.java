@@ -1,6 +1,6 @@
 package com.bimdog.mainclasses;
 
-import com.bimdog.mainclasses.util.ConnectionFactory;
+import com.bimdog.mainclasses.model.ConnectionFactory;
 
 import java.sql.*;
 
@@ -36,14 +36,6 @@ public class DatabaseManager {
 //        resultSet.close();//TODO не працює з закритими ресами
 //        disconnectDb();
         return resultSet;
-    }
-
-    public static void disconnectDb() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
 

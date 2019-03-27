@@ -1,6 +1,9 @@
-package com.bimdog.mainclasses.AppServlet;
+package com.bimdog.mainclasses.controller;
 
-import com.bimdog.mainclasses.DataBaseInsert;
+import com.bimdog.mainclasses.model.DAOException;
+import com.bimdog.mainclasses.model.UserDao;
+import com.bimdog.mainclasses.util.Validation;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,24 +24,10 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String country = request.getParameter("country");
-        String errorMsg = null;
 
         //внутрішня валідація одержаних даних
-        if (name == null || name.equals("")) {
-            errorMsg = "Name can't be null or empty.";
-        }
-        if (surname == null || surname.equals("")) {
-            errorMsg = "Surname can't be null or empty.";
-        }
-        if (login == null || login.equals("")) {
-            errorMsg = "Login can't be null or empty.";
-        }
-        if (password == null || password.equals("")) {
-            errorMsg = "Password can't be null or empty.";
-        }
-        if (country == null || country.equals("")) {
-            errorMsg = "Country can't be null or empty.";
-        }
+        String errorMsg = Validation.validationFormData(name, surname, login, password, country);
+
 
         //вивід повідомлення про невірний ввід даних
         if (errorMsg != null) {
@@ -53,8 +42,12 @@ public class RegisterServlet extends HttpServlet {
         } else {
 
             //запис даних в базу
-            DataBaseInsert dataBaseInsert = new DataBaseInsert();
-            dataBaseInsert.insert(name, surname, login, password, country);
+            UserDao userDao = new UserDao();
+            try {
+                userDao.insertUser(name, surname, login, password, country);
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
 
             //вивід повідомлення про успішний ввід даних
             response.setContentType("text/html");

@@ -1,4 +1,4 @@
-package com.bimdog.mainclasses.util;
+package com.bimdog.mainclasses.model;
 
 import java.io.IOException;
 import java.io.InputStream;

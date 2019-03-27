@@ -1,4 +1,4 @@
-package com.bimdog.mainclasses.AppServlet;
+package com.bimdog.mainclasses.controller;
 
 import com.bimdog.mainclasses.DatabaseManager;
 import com.bimdog.mainclasses.User;

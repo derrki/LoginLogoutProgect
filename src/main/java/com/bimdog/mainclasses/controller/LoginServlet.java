@@ -1,7 +1,9 @@
-package com.bimdog.mainclasses.AppServlet;
+package com.bimdog.mainclasses.controller;
 
 import com.bimdog.mainclasses.DatabaseManager;
 import com.bimdog.mainclasses.User;
+import com.bimdog.mainclasses.util.Validation;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,24 +26,18 @@ public class LoginServlet extends HttpServlet {
         //дані одержані з форми вводу login.html
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        String errorMsg = null;
 
         //внутрішня валідація одержаних даних
-        if(login == null || login.equals("")){
-            System.out.println(" login =" +login);
-            errorMsg = "Login can't be null or empty.";
-        }
-        if(password == null || password.equals("")){
-            System.out.println("login");
-            errorMsg = "Password can't be null or empty.";
-        }
+        String errorMsg = Validation.validationFormData(login, password);
 
+        //вивід повідомлення про невірний ввід даних
         if(errorMsg!=null){
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/login.html");
             PrintWriter out= response.getWriter();
             out.println("<font color=red>"+errorMsg+"</font>");
             requestDispatcher.include(request, response);
         }else{
+
             //sql запит для вибірки з таблиці з параметрами
             String sqlUsers = "SELECT id, name, surname, login, password from users WHERE login=? and password=? limit 1";
 
@@ -63,8 +59,6 @@ public class LoginServlet extends HttpServlet {
 
                     //перший зареєстрований користувач стає адміністратором
                     if(parameterSearchCountry==1){
-                        //ViewAdminServlet viewAdminServlet = new ViewAdminServlet();
-                        //viewAdminServlet.doGet(request, response);
                         String query = "SELECT * from users";
                         ResultSet resultSet =databaseManager.query(query);
                         listUser = listAllUser(resultSet);
