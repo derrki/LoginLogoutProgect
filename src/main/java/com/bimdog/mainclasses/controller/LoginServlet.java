@@ -2,6 +2,8 @@ package com.bimdog.mainclasses.controller;
 
 import com.bimdog.mainclasses.DatabaseManager;
 import com.bimdog.mainclasses.User;
+import com.bimdog.mainclasses.model.DAOException;
+import com.bimdog.mainclasses.model.UserDao;
 import com.bimdog.mainclasses.util.Validation;
 
 import javax.servlet.RequestDispatcher;
@@ -37,7 +39,6 @@ public class LoginServlet extends HttpServlet {
             out.println("<font color=red>"+errorMsg+"</font>");
             requestDispatcher.include(request, response);
         }else{
-
             //sql запит для вибірки з таблиці з параметрами
             String sqlUsers = "SELECT id, name, surname, login, password from users WHERE login=? and password=? limit 1";
 
@@ -45,11 +46,13 @@ public class LoginServlet extends HttpServlet {
             ResultSet resultSetCountry = null;
             ArrayList<User> listUser = null;
 
+            UserDao userDao = new UserDao();
+
             try {
                 //вибірка даних з таблиці
-                resultSetUsers = databaseManager.query(sqlUsers, login, password);
+                resultSetUsers = databaseManager.query(sqlUsers, login, password);//
 
-                if(resultSetUsers != null && resultSetUsers.next()){
+                if(resultSetUsers != null && resultSetUsers.next()){//
 
                     int parameterSearchCountry = resultSetUsers.getInt("id");
 
@@ -59,15 +62,10 @@ public class LoginServlet extends HttpServlet {
 
                     //перший зареєстрований користувач стає адміністратором
                     if(parameterSearchCountry==1){
-                        String query = "SELECT * from users";
-                        ResultSet resultSet =databaseManager.query(query);
-                        listUser = listAllUser(resultSet);
 
-                        User user = null;
-                        if(resultSetCountry.next()){
-                            String country = resultSetCountry.getString("country");
-                            user = new User(resultSetUsers.getString("name"), resultSetUsers.getString("surname"), resultSetUsers.getString("login"),  resultSetUsers.getString("password"), country);
-                        }
+                        listUser = userDao.readData();
+
+                        User user = listUser.get(1);
 
                         //вивід прочитаних даних на jsp
                         HttpSession session = request.getSession();
@@ -98,22 +96,9 @@ public class LoginServlet extends HttpServlet {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (DAOException e) {
+                e.printStackTrace();
             }
         }
-    }
-
-    static ArrayList<User> listAllUser(ResultSet resultSet) throws SQLException {
-            ArrayList<User> listUser = new ArrayList<>();
-            User user;
-            while (resultSet.next()){
-                String name = resultSet.getString("name");
-                String surname = resultSet.getString("surname");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                String country = "UA";
-                user = new User(name, surname, login, password, country);
-                listUser.add(user);
-            }
-            return listUser;
     }
 }

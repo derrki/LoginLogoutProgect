@@ -18,6 +18,15 @@ public class User {
         this.country = country;
     }
 
+    public User(String name, String surname, String login, String password, String country, String role) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.country = country;
+        this.role = role;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

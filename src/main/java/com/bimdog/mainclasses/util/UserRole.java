@@ -1,13 +1,10 @@
 package com.bimdog.mainclasses.util;
 
-import com.bimdog.mainclasses.User;
-
 public class UserRole {
 
-    public static String setUserRole(User user){
+    public static String setUserRole(boolean value){
         String role = null;
-
-        if (user==null){
+        if (value==false){
             role = "admin";
         }
         else {
