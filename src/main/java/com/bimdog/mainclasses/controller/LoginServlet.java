@@ -3,6 +3,7 @@ package com.bimdog.mainclasses.controller;
 import com.bimdog.mainclasses.DatabaseManager;
 import com.bimdog.mainclasses.User;
 import com.bimdog.mainclasses.model.DAOException;
+import com.bimdog.mainclasses.model.RoleDAO;
 import com.bimdog.mainclasses.model.UserDao;
 import com.bimdog.mainclasses.util.Validation;
 
@@ -47,6 +48,7 @@ public class LoginServlet extends HttpServlet {
             ArrayList<User> listUser = null;
 
             UserDao userDao = new UserDao();
+            RoleDAO roleDAO = new RoleDAO();
 
             try {
                 //вибірка даних з таблиці
@@ -61,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 
 
                     //перший зареєстрований користувач стає адміністратором
-                    if(parameterSearchCountry==1){
+                    if(roleDAO.getUserRole(login, password).equals("admin")){
 
                         listUser = userDao.readData();
 
